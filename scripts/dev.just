@@ -19,4 +19,3 @@ prepare *flags: (prune flags)
     ^deno install --entrypoint npm:typescript@6
     ^deno run -A scripts/compat.ts
     cd apps/vision; ^deno run -A npm:@sveltejs/kit@next/svelte-kit sync
-    cd apps/svelte; ^deno run -A npm:@sveltejs/kit@next/svelte-kit sync
