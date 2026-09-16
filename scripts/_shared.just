@@ -18,10 +18,6 @@ list:
 menu:
     ^{{ CLI }} menu --justfile '{{ JUSTFILE }}' --complete run 'apps/*' --complete preview 'apps/*' --complete build 'apps/*'
 
-[group('meta')]
-[private]
-_clean-tree:
-    git diff --quiet || (echo "working tree dirty" && exit 1)
 
 [doc('Compile an inlang project into a paraglide runtime')]
 [group('build')]

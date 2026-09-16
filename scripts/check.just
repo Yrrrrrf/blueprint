@@ -13,7 +13,7 @@ lint:
 [doc('Audit all code namespaces')]
 [group('check')]
 audit:
-    ^deno run -A npm:fallow -c config/fallowrc.json
+    -^deno run -A npm:fallow -c config/fallowrc.json
 
 [doc('Check code health')]
 [group('check')]
@@ -26,7 +26,7 @@ TYPES_RULES := '''
 [
   {
     "packages": "sdk/*",
-    "pattern": "sdk/**/*.svelte.ts",
+    "pattern": "sdk/**/*.{svelte,svelte.ts}",
     "engine": "svelte-check-native",
     "cwd": "{root}",
     "command": ["deno", "run", "-A", "npm:svelte-check-native", "--tsconfig", "sdk/tsconfig.json", "--config", "{package}/vite.config.ts"]
@@ -69,9 +69,9 @@ types *flags:
     # needed by scn
     ^deno install --entrypoint npm:svelte-check-native npm:@typescript/native-preview npm:typescript@6 npm:vue-tsc@3.3.11
     ^deno run -A scripts/compat.ts
-    ^{{ CLI }} matrix --title "TYPES" --rules '{{ TYPES_RULES }}' {{ flags }}
+    -^{{ CLI }} matrix --title "TYPES" --rules '{{ TYPES_RULES }}' {{ flags }}
 
 [doc('Run all check quality gates (pass -v for detailed logs, -b for timing, -p for parallel)')]
 [group('check')]
 [positional-arguments]
-check *args: fmt lint (types args)
+check *args: fmt lint audit health (types args)
