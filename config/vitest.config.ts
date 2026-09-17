@@ -1,6 +1,11 @@
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
+	resolve: {
+		alias: {
+			"@std/assert": "@jsr/std__assert",
+		},
+	},
 	test: {
 		globals: true,
 		projects: [

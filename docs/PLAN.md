@@ -1,7 +1,12 @@
 # Blueprint: Implementation Execution Plan
 
-> [!abstract] Step-by-Step Implementation Roadmap
-> This actionable implementation plan guides the development of the **Blueprint** CAD/layout plugin for **rune-lab**. Each phase is modular, testable, and builds directly on the technical decisions documented in [BLUEPRINT_MANIFEST.md](file:///home/yrrrrrf/Documents/lab/code/typescript/rune-lab/BLUEPRINT_MANIFEST.md).
+> [!CAUTION] Historical Document — Architecture Superseded
+> This preliminary roadmap was authored for an early monolithic plugin proposal in `rune-lab`. Work package execution and architectural contracts are normatively governed by [`Blueprint-Implementation-Specification.md`](file:///home/yrrrrrf/Documents/lab/code/typescript/blueprint/docs/Blueprint-Implementation-Specification.md) and [`Blueprint-WP00-09-Closure-Plan.md`](file:///home/yrrrrrf/Documents/lab/code/typescript/blueprint/docs/Blueprint-WP00-09-Closure-Plan.md).
+>
+> **Superseded Decisions:**
+> 1. **Scaffolding Location:** Evolved from `src/packages/plugins/blueprint` into a clean modular workspace (`sdk/core`, `sdk/renderer`, `sdk/api`, `sdk/state`, `sdk/ui`, `apps/vision`).
+> 2. **State & Scenegraph Authority:** Paper.js is strictly a projection layer; the document kernel and immutable history reside purely in `@sdk/core`.
+> 3. **FSM Implementation:** Canonical interaction is driven by XState v5 statecharts in `@sdk/state/src/blueprint/interaction.machine.ts`.
 
 ---
 

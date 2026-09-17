@@ -1,4 +1,4 @@
 // @sdk/api entrypoint
-// Network clients (GraphQL, Connect-TS) & rune-lab API plugin integration
+// Network clients, repository ports, simulator & Blueprint API adapters
 
-export {};
+export * from "./blueprint/mod.ts";

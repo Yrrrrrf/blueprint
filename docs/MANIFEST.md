@@ -1,7 +1,13 @@
 # Blueprint: Interactive 2D Vector CAD & Industrial Layout Canvas
 
-> [!abstract] Manifest & Architectural Specification
-> **Blueprint** is an extensible, interactive 2D vector canvas plugin for **rune-lab** (and standalone Svelte 5 applications) designed for architectural, technical, and industrial spatial layouts. Inspired by the fluidity of Excalidraw, but engineered with vector precision, hierarchical CAD layers, mock device libraries, and multi-format exports.
+> [!CAUTION] Historical Document — Architecture Superseded
+> This manifest is retained as historical context for initial ideation. Product architecture and implementation contracts are normatively defined in [`Blueprint-Implementation-Specification.md`](file:///home/yrrrrrf/Documents/lab/code/typescript/blueprint/docs/Blueprint-Implementation-Specification.md) and [`Blueprint-WP00-09-Closure-Plan.md`](file:///home/yrrrrrf/Documents/lab/code/typescript/blueprint/docs/Blueprint-WP00-09-Closure-Plan.md).
+>
+> **Superseded Decisions:**
+> 1. **Scenegraph as Document / History:** Superseded by pure immutable document model, command reducer, and bounded `HistoryManager` in `@sdk/core`.
+> 2. **Interaction Authority:** Superseded by strict XState v5 statecharts (`interactionMachine`) in `@sdk/state`.
+> 3. **Fixed-Only Layers:** Superseded by 4 canonical preset roles (`foundation`, `sections`, `machinery`, `marks`) plus dynamic user custom sublayers.
+> 4. **Plugin Location:** Superseded by standalone Deno monorepo packages (`sdk/core`, `sdk/renderer`, `sdk/api`, `sdk/state`, `sdk/ui`) and host app `apps/vision`.
 
 ---
 

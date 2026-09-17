@@ -1,6 +1,9 @@
 // Entrypoint for @sdk
 export * from "./api/src/mod.ts";
 export * from "./core/src/mod.ts";
+export * from "./exporters/src/mod.ts";
+export * from "./renderer/src/mod.ts";
+export type { TelemetryValue } from "./core/src/mod.ts";
 export * from "./state/src/mod.ts";
 export * from "./ui/src/mod.ts";
 export { default as Showcase } from "./ui/src/showcase.svelte";

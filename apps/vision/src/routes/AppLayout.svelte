@@ -1,4 +1,5 @@
 <script lang="ts">
+import { page } from "$app/state";
 import { getLayoutStore, WorkspaceLayout } from "rune-lab/layout";
 import {
 	type Command,
@@ -92,49 +93,55 @@ const visibleZones = $derived(
 );
 </script>
 
-<WorkspaceLayout>
-  {#snippet workspaceStrip()}
-    <div
-      class="h-full w-full rounded-xl bg-primary/15 text-primary flex flex-col items-center gap-3 py-3"
-    >
-      <span class="text-xl">🧪</span>
-      <span
-        class="[writing-mode:vertical-rl] text-[10px] font-bold uppercase tracking-widest opacity-70"
+{#if page.url.pathname.startsWith("/test/")}
+  <div class="w-full h-full min-h-screen">
+    {@render children()}
+  </div>
+{:else}
+  <WorkspaceLayout>
+    {#snippet workspaceStrip()}
+      <div
+        class="h-full w-full rounded-xl bg-primary/15 text-primary flex flex-col items-center gap-3 py-3"
       >
-        strip · alt+1
-      </span>
-    </div>
-  {/snippet}
+        <span class="text-xl">🧪</span>
+        <span
+          class="[writing-mode:vertical-rl] text-[10px] font-bold uppercase tracking-widest opacity-70"
+        >
+          strip · alt+1
+        </span>
+      </div>
+    {/snippet}
 
-  {#snippet navigationPanel()}
-    <div class="h-full w-full bg-secondary/10 text-secondary p-4 flex flex-col gap-2">
-      <h2 class="font-bold uppercase text-xs tracking-widest">Navigation</h2>
-      <p class="text-xs opacity-70">alt+2 toggles this panel</p>
-      <p class="text-xs opacity-70">(native: ctrl+b)</p>
-    </div>
-  {/snippet}
+    {#snippet navigationPanel()}
+      <div class="h-full w-full bg-secondary/10 text-secondary p-4 flex flex-col gap-2">
+        <h2 class="font-bold uppercase text-xs tracking-widest">Navigation</h2>
+        <p class="text-xs opacity-70">alt+2 toggles this panel</p>
+        <p class="text-xs opacity-70">(native: ctrl+b)</p>
+      </div>
+    {/snippet}
 
-  {#snippet content()}
-    <div class="h-full w-full overflow-y-auto bg-base-100">
-      {@render children()}
-    </div>
-  {/snippet}
+    {#snippet content()}
+      <div class="h-full w-full overflow-y-auto bg-base-100">
+        {@render children()}
+      </div>
+    {/snippet}
 
-  {#snippet detailPanel()}
-    <div class="h-full w-full bg-accent/10 text-accent p-4 flex flex-col gap-2">
-      <h2 class="font-bold uppercase text-xs tracking-widest">Detail</h2>
-      <p class="text-xs opacity-70">alt+3 toggles this panel</p>
-      <p class="text-xs opacity-70">(native: ctrl+j)</p>
-    </div>
-  {/snippet}
+    {#snippet detailPanel()}
+      <div class="h-full w-full bg-accent/10 text-accent p-4 flex flex-col gap-2">
+        <h2 class="font-bold uppercase text-xs tracking-widest">Detail</h2>
+        <p class="text-xs opacity-70">alt+3 toggles this panel</p>
+        <p class="text-xs opacity-70">(native: ctrl+j)</p>
+      </div>
+    {/snippet}
 
-  {#snippet statusbar()}
-    <div
-      class="h-full w-full bg-info/20 text-info-content flex items-center gap-4 px-3 text-[11px] font-mono"
-    >
-      <span>preset: {layout.preset}</span>
-      <span>zones: {visibleZones.join(" · ")}</span>
-      <span class="ml-auto opacity-60">alt+4 toggles me</span>
-    </div>
-  {/snippet}
-</WorkspaceLayout>
+    {#snippet statusbar()}
+      <div
+        class="h-full w-full bg-info/20 text-info-content flex items-center gap-4 px-3 text-[11px] font-mono"
+      >
+        <span>preset: {layout.preset}</span>
+        <span>zones: {visibleZones.join(" · ")}</span>
+        <span class="ml-auto opacity-60">alt+4 toggles me</span>
+      </div>
+    {/snippet}
+  </WorkspaceLayout>
+{/if}

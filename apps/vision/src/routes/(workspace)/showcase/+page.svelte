@@ -2,8 +2,6 @@
 import { LanguageSelector } from "rune-lab/i18n";
 import { getLayoutStore, RichText, Text, ThemeSelector } from "rune-lab/layout";
 import { getRegistryStore, getToastStore } from "rune-lab/palettes";
-
-import { SdkBadge } from "@sdk";
 import { Showcase } from "@sdk/ui";
 
 const layout = getLayoutStore();
@@ -43,8 +41,8 @@ const richItems = [
   <div>
     <h1 class="text-2xl font-bold">Rune Lab — test bench</h1>
     <p class="text-sm opacity-60">layout + palettes integration</p>
-    <a href="/showcase" class="link link-primary text-xs">
-      🎪 /showcase — simple page for testing Observer
+    <a href="/" class="link link-primary text-xs">
+      ⬅ Back to Blueprint Workspace
     </a>
   </div>
 

@@ -1,117 +1,94 @@
 # Blueprint: Technical Skills & References Map
 
-> [!abstract] Context Guide for Future Implementation Agents This document maps
-> all relevant skills, library documentation paths, architectural invariants,
-> and code patterns needed to implement the **Blueprint** CAD/layout canvas
-> plugin for **rune-lab**.
+> [!abstract] Context Guide for Implementation Agents
+> This document maps all relevant skills, library documentation paths, architectural invariants, and normative API rules needed to implement the **Blueprint** factory CAD/layout canvas for **rune-lab**. All paths are repo-relative (`docs/skills/...`). The normative errata from Section 3 of `Blueprint-Implementation-Specification.md` override any conflicting sample code.
 
 ---
 
 ## 1. Primary Skills Index
 
-| Skill Name   | Path                                              | Role in Blueprint                                                                                                                                          | Key Files to Read                                                                                                                                                                                                                                                                                                                                                                                              |
-| :----------- | :------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **paper.js** | `/home/yrrrrrf/Downloads/skills/lang/ts/paper.js` | **Core 2D Vector Canvas Engine:** Scenegraph, layers, Bézier curves, boolean geometry, matrix transforms, SVG/JSON I/O.                                    | [`SKILL.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/paper.js/SKILL.md), [`geometry-and-paths.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/paper.js/geometry-and-paths.md), [`interaction-and-animation.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/paper.js/interaction-and-animation.md), [`styling-and-io.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/paper.js/styling-and-io.md) |
-| **rune-lab** | `/home/yrrrrrf/Downloads/skills/lang/ts/rune-lab` | **Application Shell & Plugin Architecture:** Kernel dependency injection, 5-zone `WorkspaceLayout`, DaisyUI dynamic themes, settings, and command palette. | [`SKILL.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/rune-lab/SKILL.md), [`kernel-and-plugins.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/rune-lab/kernel-and-plugins.md), [`layout-and-theming.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/rune-lab/layout-and-theming.md)                                                                                                                |
-| **runed**    | `/home/yrrrrrf/Downloads/skills/lang/ts/runed`    | **Svelte 5 Runes Utilities:** `StateHistory` for reactive undo/redo, `FiniteStateMachine` for simple tool transitions, `PersistedState`, `Debounced`.      | [`SKILL.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/runed/SKILL.md), [`state.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/runed/state.md), [`reactivity.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/runed/reactivity.md)                                                                                                                                                                   |
-| **xstate**   | `/home/yrrrrrf/Downloads/skills/lang/ts/xstate`   | **Complex Tool State Machine:** Hierarchical statecharts for pointer interaction (`idle`, `select`, `draw_wall`, `transform`, `preview`).                  | [`SKILL.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/xstate/SKILL.md), [`hierarchical-and-parallel-states.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/xstate/hierarchical-and-parallel-states.md)                                                                                                                                                                                                 |
-| **valibot**  | `/home/yrrrrrf/Downloads/skills/lang/ts/valibot`  | **Data Schema & Validation:** Lightweight schema validation for mock devices, document save drafts, and export payload validation.                         | [`SKILL.md`](file:///home/yrrrrrf/Downloads/skills/lang/ts/valibot/SKILL.md)                                                                                                                                                                                                                                                                                                                                   |
+All reference skills are resolved locally in `docs/skills/`:
+
+| Skill Name | Local Path | Role in Blueprint | Key Reference Files |
+| :--- | :--- | :--- | :--- |
+| **`paper.js`** | `docs/skills/paper.js` | **2D Vector Canvas Engine:** Scenegraph, layers, Bézier curves, boolean geometry, matrix transforms, SVG I/O (`@sdk/renderer`). | [`SKILL.md`](skills/paper.js/SKILL.md), [`geometry-and-paths.md`](skills/paper.js/geometry-and-paths.md), [`interaction-and-animation.md`](skills/paper.js/interaction-and-animation.md), [`styling-and-io.md`](skills/paper.js/styling-and-io.md) |
+| **`rune-lab`** | `docs/skills/rune-lab` | **Application Shell & Plugin Architecture:** Kernel dependency injection, 5-zone `WorkspaceLayout`, settings, command palette, and i18n (`apps/vision`). | [`SKILL.md`](skills/rune-lab/SKILL.md), [`kernel-and-plugins.md`](skills/rune-lab/kernel-and-plugins.md), [`layout-and-theming.md`](skills/rune-lab/layout-and-theming.md), [`palettes-and-settings.md`](skills/rune-lab/palettes-and-settings.md) |
+| **`runed`** | `docs/skills/runed` | **Svelte 5 Runes Utilities:** Reactive utilities, debouncing, and finite state helpers. | [`SKILL.md`](skills/runed/SKILL.md), [`state.md`](skills/runed/state.md), [`reactivity.md`](skills/runed/reactivity.md) |
+| **`xstate`** | `docs/skills/xstate` | **Actor & Interaction Orchestration:** Hierarchical statecharts for tool lifecycles, autosave timers, telemetry subscriptions, and export jobs (`@sdk/state`). | [`SKILL.md`](skills/xstate/SKILL.md), [`actions-guards-and-effects.md`](skills/xstate/actions-guards-and-effects.md), [`actors-and-invocations.md`](skills/xstate/actors-and-invocations.md), [`hierarchical-and-parallel-states.md`](skills/xstate/hierarchical-and-parallel-states.md) |
+| **`valibot`** | `docs/skills/valibot` | **Canonical Schema & Validation:** Lightweight pure schema validation for document models, units, migrations, and fixtures (`@sdk/core`). | [`SKILL.md`](skills/valibot/SKILL.md) |
+| **`svelte`** | `docs/skills/svelte` | **Svelte 5 Runes & UI:** Component lifecycle, `$state`, `$derived`, `$props`, snippet templates, and UI rendering (`sdk/ui`, `apps/vision`). | [`SKILL.md`](skills/svelte/SKILL.md), [`component-api.md`](skills/svelte/component-api.md), [`template-syntax.md`](skills/svelte/template-syntax.md) |
+| **`deno`** | `docs/skills/deno` | **Runtime & Toolchain:** Workspace resolution, CLI commands, native permissions sandbox, and npm compatibility. | [`SKILL.md`](skills/deno/SKILL.md), [`cli-toolchain.md`](skills/deno/cli-toolchain.md), [`workspaces-and-package-json.md`](skills/deno/workspaces-and-package-json.md) |
 
 ---
 
-## 3. Critical Invariants for Implementation Agents
+## 2. Normative Errata & Architectural Invariants (Specification §3)
 
-### Paper.js Invariants (`paper@0.12.18`)
+The following rules override any obsolete patterns found in external documentation or earlier plans:
 
-1. **Explicit Scope Management (`PaperScope`):**
-   - NEVER use the default global singleton `paper.setup(canvas)` in a reusable
-     Svelte component.
-   - ALWAYS instantiate an isolated scope:
+### 2.1 Paper.js Invariants (`paper@0.12.18`)
+
+1. **Explicit Scope Activation (Multi-Canvas Isolation):**
+   - NEVER rely on `scope.Path` alone to isolate items. As proven empirically in WP-00, calling `new scope1.Path.Rectangle(...)` while `scope2` is active creates the item in `scope2.project`.
+   - ALWAYS explicitly call `scope.activate()` immediately before creating items or modifying the scenegraph:
      ```ts
      const scope = new paper.PaperScope();
      scope.setup(canvasElement);
+     scope.activate();
+     const path = new scope.Path.Rectangle(rect);
      ```
-   - Reference classes through `scope.Path`, `scope.Point`, `scope.Layer`, etc.
-2. **No Operator Overloading in TypeScript:**
-   - PaperScript arithmetic syntax (`point1 + point2`, `size * 2`) fails
-     silently or causes `NaN` in standard TS.
-   - ALWAYS use explicit methods: `point1.add(point2)`, `point.multiply(2)`,
-     `point.subtract(offset)`.
-3. **`applyMatrix = false` for Interactive Transformations:**
-   - By default, `item.applyMatrix = true`, which bakes transformations directly
-     into segment coordinates and resets `item.rotation` to `0`.
-   - Set `item.applyMatrix = false` on interactive equipment and shapes so that
-     `.rotation`, `.scaling`, and `.position` retain inspectable transform
-     values.
-4. **Coordinate Spaces: View vs. Project:**
-   - Pointer events from the browser (`e.offsetX`, `e.offsetY`) exist in DOM
-     pixel space.
-   - Convert to Paper project coordinates via `scope.view.viewToProject(point)`
-     before performing hit tests or placing items.
-5. **Scenegraph Memory Cleanup:**
-   - Removing an item variable in TypeScript does not delete it from Paper's
-     memory.
-   - Explicitly call `item.remove()` to detach an item, and call
-     `scope.project.clear()` and `scope.project.remove()` upon component unmount
-     (`onDestroy` / `$effect` teardown).
+2. **No Blanket Path Simplification:**
+   - NEVER call `path.simplify(1)` on CAD geometry. Simplification alters curves and vertices; a unitless tolerance can erase fine architectural features and wall openings.
+3. **DOM vs. View Coordinate Systems:**
+   - Raw `clientX` and `clientY` are DOM viewport coordinates. Scrolled pages, CSS transforms, panel offsets, and device pixel ratios alter offsets.
+   - ALWAYS convert input via canvas bounding rect and `scope.view.viewToProject(point)`.
+4. **Interactive Transforms (`applyMatrix = false`):**
+   - By default, Paper.js bakes transformations directly into segment coordinates (`applyMatrix = true`).
+   - Interactive symbols and catalog equipment must set `item.applyMatrix = false` so that `.position`, `.rotation`, and `.scaling` remain inspectable without loss of identity.
+5. **Scenegraph Teardown:**
+   - Disposing a component must explicitly call `scope.project.clear()`, remove the project from `scope.projects`, and clear canvas references to prevent memory leaks.
 
 ---
 
-### Svelte 5 & Rune-Lab Invariants
+### 2.2 XState v5 Invariants (`xstate@5.19+`)
 
-1. **Fine-Grained Runes State:**
-   - Use `$state()` for reactive UI properties (`activeTool`, `canUndo`,
-     `selectedItem`).
-   - Use `$derived()` for computed state (e.g.
-     `isDrawing = $derived(currentTool !== 'select')`).
-   - Never mutate external state inside `$derived` expressions.
-2. **Kernel Slot Dependency Declaration:**
-   - Plugins defining slots must declare their dependencies explicitly via
-     `requires: ["rune-lab.layout"]`.
-   - Plugin state cells wrap Effect's `SubscriptionRef` for reactive cross-slot
-     synchronization.
-3. **daisyUI Dynamic Theming:**
-   - All custom toolbar and inspector components should use semantic daisyUI
-     class tokens (`bg-base-100`, `text-base-content`, `btn-primary`, `card`,
-     `badge`) to automatically respond to the user's selected theme.
+1. **Action & Assignment Execution Order:**
+   - XState v5 executes ordinary actions and `assign` in declared order. Do NOT assume assignments are hoisted ahead of effects.
+   - An action/assign/action sequence executes sequentially (`0, 1, 2`), allowing intermediate actions to inspect state transitions.
+2. **Actor Messaging via `sendParent`:**
+   - `sendParent` is fully supported in XState v5. NEVER access private `self._parent`.
+   - Child actors communicate with parent state machines via `sendParent({ type: 'EVENT' })` or typed actor reference injection.
+3. **`spawnChild` is an Action Creator:**
+   - `spawnChild` can appear directly in state `entry` or transition `actions`; it is not restricted to `assign` callbacks.
+4. **History State vs. Document Undo:**
+   - XState `type: 'history'` remembers active state nodes (e.g., returning to the previous tool).
+   - Document undo/redo is NOT an XState history state; it is managed by the command reducer and transactional history stack in `@sdk/core`.
 
 ---
 
-## 4. Multi-Format Export Quick Reference
+### 2.3 Svelte 5 & Rune Lab Invariants
 
-### PDF Export (`jspdf` + `svg2pdf.js`)
+1. **Getter Bridge Destructuring Prohibition:**
+   - Destructuring a getter evaluates it once as a static value. Writing `const { snapshot } = bridge;` freezes the snapshot.
+   - ALWAYS reference `bridge.snapshot` within tracked reactive expressions (`$derived`, `$effect`, or template snippets).
+2. **Replacement Snapshots via `$state.raw`:**
+   - Use `$state.raw` for full document replacement snapshots to avoid deep proxying large geometry trees.
+   - Plain class instances (including Paper.js items) are never auto-proxied by Svelte.
+3. **Actor Startup Subscription:**
+   - Subscribe to actor state before calling `actor.start()`, then immediately capture the initial snapshot to ensure zero dropped startup transitions.
+4. **Rune Lab Kernel Integration:**
+   - Use concrete signatures from `node_modules/rune-lab/dist/src/core/mod.d.ts` (`definePlugin`, `defineSlot`, `defineSettings`).
+   - Slot specs declare dependencies explicitly via `dependsOn: ['rune-lab.layout']`.
 
-```ts
-import { jsPDF } from "jspdf";
-import "svg2pdf.js";
+---
 
-export async function exportToPdf(
-  scope: paper.PaperScope,
-  filename = "blueprint.pdf",
-) {
-  const svgElement = scope.project.exportSVG() as SVGElement;
-  const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a3" });
-  await doc.svg(svgElement, { x: 10, y: 10, width: 400, height: 277 });
-  doc.save(filename);
-}
-```
+## 3. Multi-Format Export Architecture (Specification §12)
 
-### PPTX Export (`pptxgenjs`)
+Do not use oversimplified or lossy export techniques:
 
-```ts
-import pptxgen from "pptxgenjs";
+### 3.1 PDF Export Architecture (`pdf-lib` + `jspdf` + `svg2pdf.js`)
+- **Required Quality:** Genuine vector export at architectural scales (e.g. 1:200, 1:100, 1:50) with title blocks.
+- **Optional Content Groups (OCGs):** Vector SVG conversion alone does NOT create PDF layers. Blueprint exports individual layer streams and uses `pdf-lib` to assemble valid `/OCProperties` with one OCG per document layer (`foundation`, `architectural`, `machinery`, `operational`).
 
-export async function exportToPptx(
-  scope: paper.PaperScope,
-  filename = "blueprint.pptx",
-) {
-  const pptx = new pptxgen();
-  const slide = pptx.addSlide();
-
-  // Export canvas as high-res PNG for slide backdrop
-  const dataUrl = scope.view.element.toDataURL("image/png");
-  slide.addImage({ data: dataUrl, x: 0.5, y: 0.5, w: 9, h: 5 });
-
-  await pptx.writeFile({ fileName: filename });
-}
-```
+### 3.2 PPTX Export Architecture (`pptxgenjs` + `fflate`)
+- **Required Quality:** Native editable PowerPoint geometry. Inserting a whole-canvas PNG backdrop or flattened SVG does NOT satisfy the contract.
+- **Custom Shapes & Groups:** Equipment and catalog items are emitted as native PowerPoint shape groups (`p:grpSp`), text elements, and `custGeom` freeforms with `fflate` ZIP postprocessing for shape XML customization.
